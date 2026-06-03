@@ -3,112 +3,105 @@ package com.ecommerce.backend.entity;
 import jakarta.persistence.*;
 
 @Entity
-
+@Table(name = "products")
 public class Product {
 
     @Id
-
-    @GeneratedValue(strategy =
-            GenerationType.IDENTITY)
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    private double price;
+    private Double price;
 
     private String category;
 
+    private String brand;
+
+    private String unit;
+
+    @Column(length = 1000)
     private String description;
 
     private String image;
 
-    // DEFAULT CONSTRUCTOR
+    private Integer stock;
+
+    // Constructors
 
     public Product() {
     }
 
-    // GET ID
-
-    public Long getId() {
-
-        return id;
+    public Integer getStock() {
+        return stock;
     }
 
-    // SET ID
-
-    public void setId(Long id) {
-
-        this.id = id;
+    public String getUnit() {
+        return unit;
     }
 
-    // GET NAME
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
 
     public String getName() {
-
         return name;
     }
 
-    // SET NAME
-
-    public void setName(String name) {
-
-        this.name = name;
-    }
-
-    // GET PRICE
-
-    public double getPrice() {
-
+    public Double getPrice() {
         return price;
     }
 
-    // SET PRICE
-
-    public void setPrice(double price) {
-
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    // GET CATEGORY
-
-    public String getCategory() {
-
-        return category;
-    }
-
-    // SET CATEGORY
-
-    public void setCategory(String category) {
-
-        this.category = category;
-    }
-
-    // GET DESCRIPTION
-
-    public String getDescription() {
-
-        return description;
-    }
-
-    // SET DESCRIPTION
-
-    public void setDescription(String description) {
-
-        this.description = description;
-    }
-
-    // GET IMAGE
-
     public String getImage() {
-
         return image;
     }
 
-    // SET IMAGE
-
     public void setImage(String image) {
-
         this.image = image;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+// Getters & Setters
 }

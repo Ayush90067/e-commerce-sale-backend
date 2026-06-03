@@ -1,5 +1,6 @@
 package com.ecommerce.backend.service;
 
+import com.ecommerce.backend.dto.LoginResponse;
 import com.ecommerce.backend.entity.User;
 import com.ecommerce.backend.repository.UserRepository;
 import com.ecommerce.backend.auth.JwtUtil;
@@ -23,7 +24,22 @@ public class AuthService {
     // REGISTER
     public User register(User user) {
 
-        user.setPassword(encoder.encode(user.getPassword()));
+        if (
+                userRepository.findByEmail(
+                        user.getEmail()
+                ).isPresent()
+        ) {
+
+            throw new RuntimeException(
+                    "Email already registered"
+            );
+        }
+
+        user.setPassword(
+                encoder.encode(
+                        user.getPassword()
+                )
+        );
 
         user.setRole("USER");
 
@@ -31,15 +47,39 @@ public class AuthService {
     }
 
     // LOGIN
-    public String login(String email, String password) {
+    public LoginResponse login(
+            String email,
+            String password
+    ) {
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "User not found"
+                        )
+                );
 
-        if (!encoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+        if (!encoder.matches(
+                password,
+                user.getPassword()
+        )) {
+
+            throw new RuntimeException(
+                    "Invalid Password"
+            );
         }
 
-        return jwtUtil.generateToken(user.getEmail(), user.getRole());
+        String token =
+                jwtUtil.generateToken(
+                        user.getEmail(),
+                        user.getRole()
+                );
+
+        return new LoginResponse(
+                token,
+                user.getEmail(),
+                user.getRole()
+        );
     }
 }
