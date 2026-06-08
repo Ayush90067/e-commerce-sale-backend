@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 public class OrderService {
 
+
     private final OrderRepository orderRepository;
 
     public OrderService(
@@ -19,13 +20,60 @@ public class OrderService {
                 orderRepository;
     }
 
+// SAVE ORDER
+
     public Order saveOrder(
             Order order
     ) {
+
+        if (
+                order.getStatus() == null ||
+                        order.getStatus().isEmpty()
+        ) {
+
+            order.setStatus("Pending");
+        }
+
         return orderRepository.save(order);
     }
 
+// ADMIN - GET ALL ORDERS
+
     public List<Order> getAllOrders() {
+
         return orderRepository.findAll();
     }
+
+// USER - GET MY ORDERS
+
+    public List<Order> getUserOrders(
+            String email
+    ) {
+
+        return orderRepository
+                .findByUserEmail(email);
+    }
+
+// UPDATE ORDER STATUS
+
+    public Order updateStatus(
+            Long id,
+            String status
+    ) {
+
+        Order order =
+                orderRepository
+                        .findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Order Not Found"
+                                )
+                        );
+
+        order.setStatus(status);
+
+        return orderRepository.save(order);
+    }
+
+
 }

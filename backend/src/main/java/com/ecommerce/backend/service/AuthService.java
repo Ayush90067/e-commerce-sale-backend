@@ -79,6 +79,7 @@ public class AuthService {
         return new LoginResponse(
                 token,
                 user.getEmail(),
+                user.getName(),
                 user.getRole()
         );
     }
