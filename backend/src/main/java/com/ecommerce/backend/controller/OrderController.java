@@ -21,15 +21,34 @@ public class OrderController {
                 orderService;
     }
 
+    // PLACE ORDER
+
     @PostMapping
     public Order placeOrder(
             @RequestBody Order order
     ) {
+
         return orderService.saveOrder(order);
     }
 
+    // ADMIN - ALL ORDERS
+
     @GetMapping
     public List<Order> getOrders() {
+
         return orderService.getAllOrders();
+    }
+
+    // USER - MY ORDERS
+
+    @GetMapping("/my-orders")
+    public List<Order> getMyOrders(
+
+            @RequestParam String email
+
+    ) {
+
+        return orderService
+                .getUserOrders(email);
     }
 }
