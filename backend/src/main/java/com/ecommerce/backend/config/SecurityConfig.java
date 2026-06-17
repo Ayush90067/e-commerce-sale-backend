@@ -2,13 +2,12 @@ package com.ecommerce.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -17,31 +16,11 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> {});
-
-        http.authorizeHttpRequests(auth -> auth
-
-                .requestMatchers(
-                        "/auth/**"
-                ).permitAll()
-
-                .requestMatchers(
-                        "/products/**"
-                ).permitAll()
-
-                .requestMatchers(
-                        "/orders/**"
-                ).permitAll()
-
-                .requestMatchers(
-                        "/error"
-                ).permitAll()
-
-                .anyRequest()
-                .authenticated()
-        );
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                );
 
         return http.build();
     }
-
 }
