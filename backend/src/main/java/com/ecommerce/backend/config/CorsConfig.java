@@ -19,7 +19,7 @@ public class CorsConfig {
             ) {
 
                 registry.addMapping("/**")
-                        .allowedOriginPatterns("*")
+                        .allowedOriginPatterns("https://e-commerce-sale.vercel.app")
                         .allowedMethods(
                                 "GET",
                                 "POST",
