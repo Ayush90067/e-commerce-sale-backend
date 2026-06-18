@@ -32,4 +32,12 @@ public class OrderController {
     public List<Order> getOrders() {
         return orderService.getAllOrders();
     }
+
+    @PutMapping("/{id}/status")
+    public Order updateOrderStatus(
+            @PathVariable Long id,
+            @RequestParam String status) {
+
+        return orderService.updateOrderStatus(id, status);
+    }
 }
